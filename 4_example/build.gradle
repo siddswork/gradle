@@ -1,0 +1,33 @@
+task compileDebugCharTrieNode(type: Exec) {
+     workingDir "$projectDir/CharTrieNode/Debug"
+     commandLine 'make', 'all'
+}
+
+task compileDebugWordDictionary(type: Exec) {
+     workingDir "$projectDir/WordDictionary/Debug"
+     commandLine 'make', 'all'
+}
+
+task compileDebug(type: Exec) {
+     workingDir "$projectDir/DictionaryApp/Debug"
+     commandLine 'make', 'all'
+}
+
+compileDebug.dependsOn compileDebugWordDictionary
+compileDebugWordDictionary.dependsOn compileDebugCharTrieNode
+
+task debugCleanCharTrieNode(type: Exec) {
+     workingDir "$projectDir/CharTrieNode/Debug"
+     commandLine 'make', 'clean'
+}
+
+task debugCleanWordDictionary(type: Exec, dependsOn: debugCleanCharTrieNode) {
+     workingDir "$projectDir/WordDictionary/Debug"
+     commandLine 'make', 'clean'
+}
+
+task debugClean(type: Exec, dependsOn: debugCleanWordDictionary) {
+     workingDir "$projectDir/DictionaryApp/Debug"
+     commandLine 'make', 'clean'
+}
+

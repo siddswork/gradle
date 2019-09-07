@@ -1,0 +1,26 @@
+#!/bin/bash
+
+export DYLD_LIBRARY_PATH=./lib:${DYLD_LIBRARY_PATH}
+
+if [[ ! -d "./lib" ]]
+then
+   echo "mkdir lib"
+fi
+
+if [[ ! -d "./bin" ]]
+then
+   echo "mkdir bin"
+fi
+
+cd lib
+[[ -h libCharTrieNode.so ]] || ln -s ../../CharTrieNode/Debug/libCharTrieNode.so
+[[ -h libWordDictionary.so ]] || ln -s ../../WordDictionary/Debug/libWordDictionary.so
+
+cd ../bin
+[[ -h DictionaryApp.out ]] || ln -s ../../DictionaryApp/Debug/DictionaryApp.out
+chmod u+x DictionaryApp.out
+
+cd ..
+
+./bin/DictionaryApp.out
+
