@@ -20,6 +20,7 @@ Lastly, at the root of the workspace I created a build.gradle script, that can d
 ## Running Gradle to build the code
 
 ### Cleaning the shared libraries and executable
+```
  $ cd 4_example
  $ gradle debugClean
 
@@ -37,8 +38,9 @@ Lastly, at the root of the workspace I created a build.gradle script, that can d
  
  BUILD SUCCESSFUL in 1s
  3 actionable tasks: 3 executed
-
+```
 ### Compiling the application (i.e. compiling all projects)
+```
  $ gradle compileDebug
  
  > Task :compileDebugCharTrieNode
@@ -81,10 +83,11 @@ Lastly, at the root of the workspace I created a build.gradle script, that can d
 
  BUILD SUCCESSFUL in 13s
  3 actionable tasks: 3 executed
- 
+ ```
  ## Notes:
  ### gradle allows short task names
  Below I used "gradle cD" instead of "gradle compileDebug"
+```
  $ gradle cD
  > Task :compileDebugCharTrieNode
  make: Nothing to be done for `all'.
@@ -97,5 +100,5 @@ Lastly, at the root of the workspace I created a build.gradle script, that can d
  
  BUILD SUCCESSFUL in 1s
  3 actionable tasks: 3 executed
- 
+ ```
  Similarly, we can use "gradle dC" instead of "gradle debugClean"
