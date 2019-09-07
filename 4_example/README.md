@@ -58,7 +58,8 @@ Lastly, at the root of the workspace I created a build.gradle script, that can d
  Invoking: GCC C++ Compiler
  g++ -std=c++0x -I../../CharTrieNode/src -O0 -g3 -Wall -Werror -c -fmessage-length=0 -fPIC -MMD -MP -MF"src/WordDictionary.d" -MT"src/WordDictionary.o" -o "src/WordDictionary.o" "../src/WordDictionary.cpp"
  Finished building: ../src/WordDictionary.cpp
- 
+
+
  Building target: libWordDictionary.so
  Invoking: MacOS X C++ Linker
  g++ -L../../CharTrieNode/Debug -dynamiclib -o "libWordDictionary.so"  ./src/WordDictionary.o   -lCharTrieNode
@@ -70,6 +71,7 @@ Lastly, at the root of the workspace I created a build.gradle script, that can d
  Invoking: GCC C++ Compiler
  g++ -std=c++0x -I../../CharTrieNode/src -I../../WordDictionary/src -O0 -g3 -Wall -Werror -c -fmessage-length=0 -MMD -MP -MF"src/DictionaryApp.d" -MT"src/DictionaryApp.o" -o "src/DictionaryApp.o" "../src/DictionaryApp.cpp"
  Finished building: ../src/DictionaryApp.cpp
+
 
  Building target: DictionaryApp.out
  Invoking: MacOS X C++ Linker
