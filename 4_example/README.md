@@ -1,4 +1,4 @@
-# Example 4: Building a multi-project C++ application
+# Example 4: Building C++ application with multiple projects having linear dependency
 
 This is my first experiment with C++ build script. Here I built a small application that reads a file with words and build a trie (also called digital tree, radix tree or prefix tree). This algorithm is good for building a dictionary and is really good for looking up words by their prefix. I used this program so that if someone wants they can even have some fun with the code. 
 
