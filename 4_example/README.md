@@ -107,7 +107,6 @@ Lastly, at the root of the workspace I created a build.gradle script, that can d
  ### How to run the code
  To run the code, you need to build the run envoronment. Note that run environment is not in git repository. Follow below steps:
  * Go to folder 4_example
- * execute buildRun.ksh
- ** This will create a new run folder under 4_example
+ * execute buildRun.ksh (This will create a new run folder under 4_example)
  * go to run folder 
  * execute start script
