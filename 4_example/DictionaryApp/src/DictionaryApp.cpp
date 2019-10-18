@@ -13,7 +13,7 @@
 using namespace std;
 
 int main() {
-	string filePath = "/Users/sidd/dev/cpp/workspace/Dictionary/Resources/words.txt";
+	string filePath = "./resource/words.txt";
 	WordDictionary myDictionary(filePath);
 	myDictionary.load();
 

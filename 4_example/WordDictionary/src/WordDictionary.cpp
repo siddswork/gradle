@@ -53,7 +53,7 @@ void WordDictionary::load()
 	inputFile.open(filePath_);
 	char buffer[1024];
 
-	cout << "Reading from the file" << endl;
+	cout << "Reading from file: " << filePath_ << endl;
 	lengthOfBiggestWord_ = 0;
 	while(inputFile.good())
 	{
