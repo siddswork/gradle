@@ -1,0 +1,47 @@
+task compileDebugCpu(type: Exec) {
+     workingDir "$projectDir/cpu/Debug"
+     commandLine 'make', 'all'
+}
+
+task compileDebugMemory(type: Exec) {
+     workingDir "$projectDir/memory/Debug"
+     commandLine 'make', 'all'
+}
+
+task compileDebugHardDrive(type: Exec) {
+     workingDir "$projectDir/harddrive/Debug"
+     commandLine 'make', 'all'
+}
+
+task compileDebug(type: Exec) {
+     workingDir "$projectDir/ComputerFacade/Debug"
+     commandLine 'make', 'all'
+}
+
+compileDebug.dependsOn compileDebugCpu 
+compileDebug.dependsOn compileDebugMemory 
+compileDebug.dependsOn compileDebugHardDrive
+
+task debugCleanCpu(type: Exec) {
+     workingDir "$projectDir/cpu/Debug"
+     commandLine 'make', 'clean'
+}
+
+task debugCleanMemory(type: Exec) {
+     workingDir "$projectDir/memory/Debug"
+     commandLine 'make', 'clean'
+}
+
+task debugCleanHardDrive(type: Exec) {
+     workingDir "$projectDir/harddrive/Debug"
+     commandLine 'make', 'clean'
+}
+
+task debugClean(type: Exec) {
+     dependsOn debugCleanCpu
+     dependsOn debugCleanMemory 
+     dependsOn debugCleanHardDrive
+     workingDir "$projectDir/ComputerFacade/Debug"
+     commandLine 'make', 'clean'
+}
+
