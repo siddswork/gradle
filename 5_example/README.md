@@ -106,3 +106,104 @@ Lastly the main part, at the root of the workspace I created a build.gradle scri
  ** This will create a new run folder under 5_example
  * $ cd run
  * $ ./start
+
+ ### Viewing tasks defined in gradle
+```
+ $ gradle tasks 
+ 
+ > Task :tasks
+ 
+ ------------------------------------------------------------
+ Tasks runnable from root project
+ ------------------------------------------------------------
+ 
+ Build Setup tasks
+ -----------------
+ init - Initializes a new Gradle build.
+ wrapper - Generates Gradle wrapper files.
+ 
+ Help tasks
+ ----------
+ buildEnvironment - Displays all buildscript dependencies declared in root project '5_example'.
+ components - Displays the components produced by root project '5_example'. [incubating]
+ dependencies - Displays all dependencies declared in root project '5_example'.
+ dependencyInsight - Displays the insight into a specific dependency in root project '5_example'.
+ dependentComponents - Displays the dependent components of components in root project '5_example'. [incubating]
+ help - Displays a help message.
+ model - Displays the configuration model of root project '5_example'. [incubating]
+ projects - Displays the sub-projects of root project '5_example'.
+ properties - Displays the properties of root project '5_example'.
+ tasks - Displays the tasks runnable from root project '5_example'.
+ 
+ To see all tasks and more detail, run gradle tasks --all
+ 
+ To see more detail about a task, run gradle help --task <task>
+ 
+ BUILD SUCCESSFUL in 797ms
+ 1 actionable task: 1 executed
+```
+The tasks shown here are all the default tasks supported by gradle. But it is not showing all the tasks we defined to see the we need to use --all options.
+```
+$ gradle tasks --all
+
+> Task :tasks
+
+------------------------------------------------------------
+Tasks runnable from root project
+------------------------------------------------------------
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build.
+wrapper - Generates Gradle wrapper files.
+
+Help tasks
+----------
+buildEnvironment - Displays all buildscript dependencies declared in root project '5_example'.
+components - Displays the components produced by root project '5_example'. [incubating]
+dependencies - Displays all dependencies declared in root project '5_example'.
+dependencyInsight - Displays the insight into a specific dependency in root project '5_example'.
+dependentComponents - Displays the dependent components of components in root project '5_example'. [incubating]
+help - Displays a help message.
+model - Displays the configuration model of root project '5_example'. [incubating]
+projects - Displays the sub-projects of root project '5_example'.
+properties - Displays the properties of root project '5_example'.
+tasks - Displays the tasks runnable from root project '5_example'.
+
+Other tasks
+-----------
+compileDebug
+compileDebugCpu
+compileDebugHardDrive
+compileDebugMemory
+debugClean
+debugCleanCpu
+debugCleanHardDrive
+debugCleanMemory
+prepareKotlinBuildScriptModel
+
+BUILD SUCCESSFUL in 791ms
+1 actionable task: 1 executed
+```
+Now we can see all manually defined tasks under "Other Tasks". However there is one extra task "prepareKotlinBuildScriptModel" which was not defined by us. 
+
+ ### Looking at the dependency deifnition
+In the build.gradle file we created 2 set of tasks, one for compilations and the other for cleaning. The compilation tasks are: compileDebugCpu, compileDebugHardDrive, compileDebugMemory & compileDebug. compileDebug is the final compilation and has dependency on Cpu, HardDrive & Memory projects. So we compile them first and then compile compileDebug. The task dependencies can be defined both inside or outside the task. For compilation we defined them outside. The given dependency can again be defined in 2 ways as shown below:  
+```
+compileDebug.dependsOn compileDebugCpu 
+compileDebug.dependsOn compileDebugMemory 
+compileDebug.dependsOn compileDebugHardDrive
+    OR 
+compileDebug.dependsOn compileDebugCpu, compileDebugMemory, compileDebugHardDrive 
+```
+For cleanup we have 4 tasks: debugClean, debugCleanCpu, debugCleanHardDrive, debugCleanMemory. There is actually no dependency while clean up. However I just created a dependency to show how we can define dependency inside the task.
+```
+task debugClean(type: Exec) {
+     dependsOn debugCleanCpu
+     dependsOn debugCleanMemory
+     dependsOn debugCleanHardDrive
+     workingDir "$projectDir/ComputerFacade/Debug"
+     commandLine 'make', 'clean'
+}
+```
+
