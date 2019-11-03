@@ -96,7 +96,8 @@ Lastly the main part, at the root of the workspace I created a build.gradle scri
  4 actionable tasks: 4 executed
 ```
  ## Notes:
- ### Here we are using the --parallel option, this should ideally make the tasks run in paralle based on dependencydefined. Parallel project compilation should reduce the total time taken to build the application. Without this gradle will always execute each task in sequence.
+ ### Parallelizing the build
+ Here we are using the --parallel option, this should make the tasks run in paralle based on defined dependency. Parallel project compilation should reduce the total time taken to build the application. Without this gradle will always execute each task in sequence.
 
  ### How to run the code
  To run the code, you need to compile the code using above mentioned method and then build the run envoronment. Note that run environment is not in git repository. One can follow below steps:
@@ -206,4 +207,69 @@ task debugClean(type: Exec) {
      commandLine 'make', 'clean'
 }
 ```
+### Additional notes on parallelizing build 
+To prove that the code is really working in parallel, I ran the parallel build using --scan option.
+```
+$ gradle compileDebug --parallel --scan
 
+> Task :compileDebugCpu
+Building file: ../src/cpu.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++0x -O0 -g3 -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"src/cpu.d" -MT"src/cpu.o" -o "src/cpu.o" "../src/cpu.cpp"
+Finished building: ../src/cpu.cpp
+ 
+Building target: libcpu.so
+Invoking: MacOS X C++ Linker
+g++ -dynamiclib -o "libcpu.so"  ./src/cpu.o   
+Finished building target: libcpu.so
+ 
+
+> Task :compileDebugHardDrive
+Building file: ../src/harddrive.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++0x -O0 -g3 -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"src/harddrive.d" -MT"src/harddrive.o" -o "src/harddrive.o" "../src/harddrive.cpp"
+Finished building: ../src/harddrive.cpp
+ 
+Building target: libharddrive.so
+Invoking: MacOS X C++ Linker
+g++ -dynamiclib -o "libharddrive.so"  ./src/harddrive.o   
+Finished building target: libharddrive.so
+ 
+
+> Task :compileDebugMemory
+Building file: ../src/memory.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++0x -O0 -g3 -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"src/memory.d" -MT"src/memory.o" -o "src/memory.o" "../src/memory.cpp"
+Finished building: ../src/memory.cpp
+ 
+Building target: libmemory.so
+Invoking: MacOS X C++ Linker
+g++ -dynamiclib -o "libmemory.so"  ./src/memory.o   
+Finished building target: libmemory.so
+ 
+
+> Task :compileDebug
+Building file: ../src/ComputerFacade.cpp
+Invoking: GCC C++ Compiler
+g++ -std=c++0x -I../../cpu/src -I../../harddrive/src -I../../memory/src -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/ComputerFacade.d" -MT"src/ComputerFacade.o" -o "src/ComputerFacade.o" "../src/ComputerFacade.cpp"
+Finished building: ../src/ComputerFacade.cpp
+ 
+Building target: ComputerFacade.out
+Invoking: MacOS X C++ Linker
+g++ -L../../cpu/Debug -L../../harddrive/Debug -L../../memory/Debug -o "ComputerFacade.out"  ./src/ComputerFacade.o   -lcpu -lharddrive -lmemory
+Finished building target: ComputerFacade.out
+ 
+
+BUILD SUCCESSFUL in 12s
+4 actionable tasks: 4 executed
+
+Publishing a build scan to scans.gradle.com requires accepting the Gradle Terms of Service defined at https://gradle.com/terms-of-service. Do you accept these terms? [yes, no] yes
+
+Gradle Terms of Service accepted.
+
+Publishing build scan...
+https://gradle.com/s/yqef5fdmjw7li
+```
+This uploads my report to https://scans.gradle.com/ which can be accessable through https://gradle.com/s/yqef5fdmjw7li
+On the web page you can see that inspite of me having the --parallel options on, the execution was sequential. But Why?? :(
+This is something I need to figure out now.
