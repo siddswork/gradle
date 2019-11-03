@@ -22,29 +22,29 @@ fi
 [ -d run/resource ] || mkdir run/resource;
 
 cd run/lib
-if [[ -e libCharTrieNode.so ]]
+if [[ ! -e libCharTrieNode.so ]]
 then
    ln -s ../../CharTrieNode/Debug/libCharTrieNode.so
 fi
-if [[ -e libWordDictionary.so ]]
+if [[ ! -e libWordDictionary.so ]]
 then
    ln -s ../../WordDictionary/Debug/libWordDictionary.so
 fi
 
 cd ../bin
-if [[ -e DictionaryApp.out ]]
+if [[ ! -e DictionaryApp.out ]]
 then
    ln -s ../../DictionaryApp/Debug/DictionaryApp.out
 fi
 
 cd ../resource
-if [[ -e words.txt ]]
+if [[ ! -e words.txt ]]
 then
    ln -s ../../resource/words.txt
 fi
 
 cd ..
-if [[ -e start ]]
+if [[ ! -e start ]]
 then
    cat >> start <<EOF
 #!/bin/ksh
