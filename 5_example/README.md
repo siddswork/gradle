@@ -271,5 +271,22 @@ Publishing build scan...
 https://gradle.com/s/yqef5fdmjw7li
 ```
 This uploads my report to https://scans.gradle.com/ which can be accessable through https://gradle.com/s/yqef5fdmjw7li
-On the web page you can see that inspite of me having the --parallel options on, the execution was sequential. But Why?? :(
-This is something I need to figure out now.
+On the web page you can see that inspite of me having the --parallel options on, the execution was sequential. But Why?? I quickly checked my gradle version.
+```
+$ gradle --version
+
+------------------------------------------------------------
+Gradle 5.6
+------------------------------------------------------------
+
+Build time:   2019-08-14 21:05:25 UTC
+Revision:     f0b9d60906c7b8c42cd6c61a39ae7b74767bb012
+
+Kotlin:       1.3.41
+Groovy:       2.5.4
+Ant:          Apache Ant(TM) version 1.9.14 compiled on March 12 2019
+JVM:          1.8.0_112 (Oracle Corporation 25.112-b16)
+OS:           Mac OS X 10.15.1 x86_64
+```
+It's been some time since I worked on it. Now gradle is at 6.0.1 version. May be the upgraded version will parallelize tasks, I need to check.
+However if a project has multiple .cpp files they can be compiled parallely using ```gmake all -j <n>``` option, where n is the number of threads you want to use. This greatly reduces project compilation time. But our aim is to execute tasks in parallel.
